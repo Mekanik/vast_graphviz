@@ -1,22 +1,25 @@
-
-IBM Visual Age Smalltalk 5.5.2 plugin to create graphviz diagrams of classes.
+IBM VisualAge Smalltalk 5.5.2 modification to create graphviz diagrams of classes.
 
 Using:
 Right mouse button click on class name in source edit window to get opened diagram of classes in png format.
 -- "Make full graph" : Make tree with all subclasses and superclasses of classes from input collection.
 -- "Make graph" : Make tree with chain of superclasses of classes from input collection.
 
-
 Instalation:
 
 1. Download and install graphviz. http://www.graphviz.org
-2. Check thar your system PATH variable contains path to graphviz binarys.
-3. In Visual Age choose application to import GraphViz class, right button click and select Import/Export->File In
-and select SysGVTree.st file.
-4. Add custom menu to source editor.
-
-
-
-EtWindow>>stsGraph
-EtWindow>>stsGraphFull
-
+2. Check that your system PATH variable contains path to graphviz binaries.
+3. In Visual Age choose application to import GraphViz class, right button click and select Import/Export->File In and select SysGVTree.st file.
+4. Add custom menu to source editor:
+4.1 Find class EtWindow, modify method "stsDefaultTextMenu: menu" by adding custom menu:
+^menu
+  ....
+  add: #stsGraph
+    label: 'Make graph'
+    enable: [selectedType == ##class];
+  add: #stsGraphFull
+    label: 'Make full graph'
+    enable: [selectedType == ##class];
+  yourself
+4.2 Add new methods to EtWindow class (to handle new menu events) from source file EtWindow_methods.st
+5. Restart VisualAge Smalltalk.
